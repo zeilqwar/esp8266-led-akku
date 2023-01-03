@@ -2,8 +2,6 @@ import wx
 class config_frame(wx.Frame):
     def __init__(self,cl):
         self.cl = "error"
-        # begin wxGlade: config_frame.__init__
-       # kwds["style"] = kwds.get("style", 0) | wx.DEFAULT_FRAME_STYLE
         super().__init__(parent=None, title='Hello World')
         self.SetSize((400, 300))
         self.SetTitle("frame")
@@ -88,6 +86,7 @@ class config_frame(wx.Frame):
 
         self.Bind(wx.EVT_BUTTON, self.init, self.ok_button)
         # end wxGlade
+
 
     def init(self, event):  # wxGlade: config_frame.<event_handler>
         self.cl.anzahl=str(self.anzahl_val.GetTextValue())
