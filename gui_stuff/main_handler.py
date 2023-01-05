@@ -6,7 +6,7 @@ from gui_stuff.main_window import start_main
 import os
 
 class storage():
-    anzahl=1
+    anzahl=20
     ip_val="192.168.178.152"
     list_latenz=["x","x"]
 
