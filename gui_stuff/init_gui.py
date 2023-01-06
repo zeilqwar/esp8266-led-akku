@@ -28,7 +28,7 @@ class config_frame(wx.Frame):
         label_2 = wx.StaticText(self.panel_1, wx.ID_ANY, "Anzahl:")
         grid_sizer_1.Add(label_2, 0, 0, 0)
 
-        self.anzahl_val = wx.SpinCtrlDouble(self.panel_1, wx.ID_ANY, initial=0, min=0.0, max=100.0)
+        self.anzahl_val = wx.SpinCtrlDouble(self.panel_1, wx.ID_ANY, initial=1, min=0.0, max=100.0)
         self.anzahl_val.SetDigits(0)
         grid_sizer_1.Add(self.anzahl_val, 0, 0, 0)
 
@@ -89,8 +89,21 @@ class config_frame(wx.Frame):
 
 
     def init(self, event):  # wxGlade: config_frame.<event_handler>
-        self.cl.anzahl=str(self.anzahl_val.GetTextValue())
+        self.cl.anzahl=int(self.anzahl_val.GetTextValue())
+        self.cl.ip_val = str(self.start_ip_val.GetValue())
+        latenz=[]
+        spannung=[]
+        list_loss=[]
+        for i in range(self.cl.anzahl):
+            latenz.append("x")
+            spannung.append("x")
+            list_loss.append(0)
+        self.cl.list_latenz=latenz
+        self.cl.list_spannung=spannung
+        self.cl.list_loss= list_loss
         wx.CallAfter(self.Close)
+
+
 
 # end of class config_frame
 
