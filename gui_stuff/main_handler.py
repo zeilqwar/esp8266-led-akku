@@ -6,14 +6,16 @@ from gui_stuff.main_window import start_main
 import os
 import subprocess
 import ast
+import json
 
 class storage():
     anzahl=3
-    ip_val="192.168.178.151"
+    ip_val="www.zeilqwar.de"
     list_latenz=["x","x","x"]
     list_loss = [0, 0, 0]
     list_spannung = ["x", "x", "x"]
     terminate=False
+    go=False
 
 
 def get_data(adress):
@@ -33,6 +35,9 @@ def threading_everithing_else():
 def get_ping(ip_val,number,cl):
     w=ip_val.split(".")
     w[-1]=str(int(w[-1])+number)
+    if(int(w[-1]) >255):
+        w[-1]=str(int(w[-1])-255)
+        w[-2]=str(int(w[-2])+1)
     ip_val=w[0]+"."+w[1]+"."+w[2]+"."+w[3]
     a=subprocess.run("ping "+ip_val+" -n 1",capture_output=True,shell=True)
     print(a)
@@ -55,7 +60,7 @@ def none_gui(x):
     for i in range(1000):
         if(storage.terminate):
             break
-        time.sleep(2)
+        time.sleep(3)
         for j in range(storage.anzahl):
             t2 = Thread(target=get_ping, args=(storage.ip_val,j,storage,))  #
             t2.start()
@@ -76,10 +81,28 @@ def none_gui(x):
 #threading_main_gui()
 
 
+try:
+    with open('settings.json') as f:
+       dict_in= json.load(f)
+
+    storage.ip_val=dict_in["ip_val"]
+    storage.anzahl=dict_in["anzahl"]
+except:
+    pass
+
+
 start(storage)
+if(storage.ip_val=="ddos"):
+    for q in range(1):
+        storage.ip_val="192.168.178.151"
+        storage.anzahl=30000
 
-threading_everithing_else()
-start_main(storage)
+if(storage.go):
+    threading_everithing_else()
+    start_main(storage)
 
+    dict_save={"ip_val":storage.ip_val,"anzahl":storage.anzahl}
+    with open('settings.json', "w") as f:
+        json.dump(dict_save, f)
 
 

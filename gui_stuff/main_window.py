@@ -37,6 +37,9 @@ class main_frame(wx.Frame):
         for i in range(self.size-1):
             w = self.cl.ip_val.split(".")
             w[-1] = str(int(w[-1]) + i)
+            if (int(w[-1]) > 255):
+                w[-1] = str(int(w[-1]) - 255)
+                w[-2] = str(int(w[-2]) + 1)
             ip_val = w[0] + "." + w[1] + "." + w[2] + "." + w[3]
 
             name_1 = wx.StaticText(self.panel_1, wx.ID_ANY, ip_val)
